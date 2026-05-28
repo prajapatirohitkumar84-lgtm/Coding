@@ -1,0 +1,13 @@
+import medical_data_visualizer
+import unittest
+
+# Manual testing
+fig1 = medical_data_visualizer.draw_cat_plot()
+print("Cat plot saved to catplot.png")
+
+fig2 = medical_data_visualizer.draw_heat_map()
+print("Heat map saved to heatmap.png")
+
+# Run unit tests
+from test_module import TestVisualizer
+unittest.main(module='test_module', argv=[''], verbosity=2, exit=False)
