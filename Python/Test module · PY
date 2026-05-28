@@ -1,0 +1,35 @@
+import unittest
+import pandas as pd
+import numpy as np
+import medical_data_visualizer
+from medical_data_visualizer import draw_cat_plot, draw_heat_map
+
+
+class TestVisualizer(unittest.TestCase):
+
+    def setUp(self):
+        self.fig_cat = draw_cat_plot()
+        self.fig_heat = draw_heat_map()
+
+    def test_line_plot_has_no_title(self):
+        """Cat plot has two axes (one per cardio value)"""
+        actual = len(self.fig_cat.axes)
+        expected = 2
+        self.assertEqual(actual, expected, "Expected two axes in cat plot (cardio=0 and cardio=1)")
+
+    def test_heat_map_has_correct_number_of_labels(self):
+        """Heatmap has 13 labels (one per column)"""
+        ax = self.fig_heat.axes[0]
+        actual = len(ax.get_xticklabels())
+        expected = 13
+        self.assertEqual(actual, expected, f"Expected 13 x-axis labels in heatmap, got {actual}")
+
+    def test_heat_map_values(self):
+        """Heatmap annotations contain expected correlation values"""
+        ax = self.fig_heat.axes[0]
+        texts = [t.get_text() for t in ax.texts]
+        self.assertIn('0.0', texts, "Expected '0.0' in heatmap annotations")
+
+
+if __name__ == '__main__':
+    unittest.main()
